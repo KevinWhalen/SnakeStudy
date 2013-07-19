@@ -16,7 +16,11 @@ I didn't put a WHOLE lot of effort into the Themeroller aspect of JQM because, w
 - Nic Linscott
 
 
+
 ---
+
+###Changes: 
+
 >Changed output file format from a human read-able .txt to a smaller, more easily machine read-able .csv.
 
 >Added input validation/sanitation.
