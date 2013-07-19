@@ -1,7 +1,27 @@
-Snake Study 2013
-Nic Linscott, Dan Guinto, Graham Montague, Tanner Hadick
-Supervisor: Nic Linscott
-Advisor: Scott Maretka
 
+Board 1
+Monday 15th of July 2013
+Species;Number of Each;Length (in.)
+Brown Snakes;1;1
+Garter Snakes;1;1
+Milk Snakes;1;1
+Other;0;N/A
+Notes: test
 
+Board 1
+Monday 15th of July 2013
+Species;Number of Each;Length (in.)
+Brown Snakes;1;1
+Garter Snakes;1;1
+Milk Snakes;1;1
+Other;0;N/A
+Notes: test
 
+Board 1
+Monday 15th of July 2013
+Species;Number of Each;Length (in.)
+Brown Snakes;1;1
+Garter Snakes;1;1
+Milk Snakes;1;1
+Other;1;1;2;2;3;;;2;3;4;123;;;;
+Notes: test

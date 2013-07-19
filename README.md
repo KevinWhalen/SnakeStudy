@@ -1,22 +1,36 @@
 
 THINKS TO KNOW:
 
-This is an example on how to integrate Google Maps API and JQuery Mobile forms.
+This is an example of how to integrate Google Maps API and JQuery Mobile forms. 
 
 The Google Maps 'Info Windows' are incapable of creating forms in which the action is a PHP file.
 The forms are usually creaded in the map init() script, declaring a variable to be a string of html, 
-then appnding it to the info window via Infowindow.SetContent();.
-Since PHP is server side code and Javascript is client side, javascript cannot make initiate PHP in this manner. 
+then appnding it to the info window via Infowindow.SetContent();. 
 
-Save yourself the headache, it just doesnt work.
+Using jQuery Mobile and jQuery scripts, this example shows how to effectively submit data with google maps and forms. 
 
-Using Jquery Mobile and Jquery scripts, this example shows how to effectively submit data with google maps and forms.
+The jQuery script uses AJAX to send the data, allowing it to be sent to a PHP file without navigating to it. 
 
-The Jquery Script usues AJAX to send the data, allowing it to be sent to a PHP file without going to website.com/data.php.
-It truly makes it a background process and also saves the points on the map because there is no page refresh.
+I didn't put a WHOLE lot of effort into the Themeroller aspect of JQM because, well, I just wanted to get it working. 
 
-I didnt put a WHOLE lot of effort into the Themeroller aspect of JQM because, well, i just wanted to get it working.
+- Nic Linscott
 
-At first i tried to implement Bootstrap as well as JQM, but with Google Maps in the equation, nobody got along very well.
-I scrapped bootstrap and just used JQM because the 'data-role="dialog"' attribute made it much smoother than 
-any other method of forms.
+
+---
+Changed output file format from a human read-able .txt to a smaller, more easily machine read-able .csv.
+Added input validation/sanitation.
+Added persistant markings on the map.
+Added a dialog on marker click to allow it to be edited (edit is really just 'add to file') or deleted.
+Added a clear all button to remove all persistant map markers at once.
+The file cgi/test.py can be used to verify the CGI setup. 
+http://exampleurl.com/cgi-bin/test.py
+
+Note:
+Knowledge of how to setup a webserver with CGI may be needed to deploy this site as well as knowing how to configure the permissions of the accessed files.
+Most likely puting the CGI files in a directory at the root of the webserver with a name like 'cgi-bin' and doing a chown to apache for them as well as the used data files will cut it. 
+The python files also have to be executable. (sudo chmod +x)
+The CGI directory and the webserver username depend on individual installiations and configurations. 
+The new backend scripts were done with the CGI to allow me to learn some more Python. 
+
+- Kevin Whalen
+

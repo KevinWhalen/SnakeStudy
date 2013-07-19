@@ -24,318 +24,330 @@ bootstrap themes, not used.... but here just in case
 
   <!-- these styles are for the map-->
 <style type="text/css">
-
 #map img {
-
     max-width: none;
-	
 }
 
 #map{
-
 	margin-left: 7%; 
 	margin-right: 7%; 
-	
 	 
 	width: auto; 
 	z-index: 0;
-
+}
+body {
+	background-color: rgb(225,225,225);
 }
 </style>
-
-
 </head>
 
+<!--  initializes google map on body load -->
+<script>
+$(document).ready(function(){
+	init(); // IE8 was acting weird with this call in the body onload.
+});
+</script>
+<!--body onload="init();" style="background-color: rgb(225,225,225);"-->
+<body>
 
-	<!--  initializes google map on body load -->
-<body onload="init();" style="background-color: rgb(225,225,225);">
-
-		
-		
 	<div data-role="page" id="main" data-theme="a">
-			
+
 		<div>
 			<h1 align="center">Snake Study</h1>
 		</div><!-- /header -->
 			
 		
-			<div id="map" >
-			</div><!-- /map -->
+		<div id="map" >
+		</div><!-- /map -->
 		
-					<!-- button groups for map functionality -->
-				<div data-role="content" data-theme="a">
-						<div data-role="controlgroup" >
-							<a id="boe" data-role="button">Board of Ed Field</a>
-							<a id="oil" data-role="button">Oil Pump Field</a>
-							<a id="htw" data-role="button">High Tension Wires</a>
-						</div>
-						
-					<a id="rem" data-role="button">Remove Last Marker</a>
-				</div>
+		<!-- button groups for map functionality -->
+		<div data-role="content" data-theme="a">
+			<div data-role="controlgroup" >
+				<a id="boe" data-role="button">Board of Ed Field</a>
+				<a id="oil" data-role="button">Oil Pump Field</a>
+				<a id="htw" data-role="button">High Tension Wires</a>
+			</div>
+				
+			<a id="rem" data-role="button">Remove Last Marker</a>
+			<a id="clearAll" data-role="button">Clear All Markers</a>
+		</div>
 	
 	</div>
 		
 		
-				
-			<!-- popup dialog with forms, reset each time marker is clicked... -->
+	<!-- popup dialog with forms, reset each time marker is clicked... -->
 	<div data-role="dialog" id="formpopup" data-theme="a">
 	
-	
-		
 		<div data-role="content" data-theme="a" >
 			<!-- home button-->
 			<a href="#main" data-role="button" data-icon="back" data-iconpos="notext"></a>
-					<!-- post action is in a jquery script-->
-				<form id="form" method="post">
-									
-							<!-- certain JQM style that makes html components align a certain way-->
-						<div data-role="fieldcontain">
-							<label for="bn"><font size="5 em"> Board #:</font></label>
-							<input type="text" id="bn" name="bn" value="" />
-						</div>	
-														
-						Enter number of each species and their lengths in inches.
-									
-						<br> <strong> Brown:</strong> <input type="text" name="brown"> 			<br>
-									
-						<br> Lengths: <input type="text" placeholder="1;2;3;" name="blength1"> 	<br>
-									
-						<br> <strong>Garter: </strong> <input type="text"  name="garter"> 		<br>
-									
-						<br> Lengths: <input type="text" placeholder="1;2;3;" name="glength1">	<br>
-									
-						<br> <strong> Milk:  </strong><input type="text" name="milk"> 			<br>
-										
-						<br> Lengths: <input type="text"  placeholder="1;2;3;" name="mlength1"> <br>
-									
-						<br> <strong> Other: </strong> <input type="text"  placeholder="Number and species..." name="other"> <br>
-										
-						<br> Lengths: <input type="text" placeholder="1;2;3;" name="olength1"> 	<br>
-									
-						<br> Additional Notes: <textarea rows="3" name="notes"></textarea> 		<br>
-									
-									
-						<br>
-									<input type="submit" id="submitform" value="Submit"/>
-				</form>
-									<!-- home button-->
-							<a href="#main" data-role="button" data-icon="back" data-iconpos="notext"></a>
+
+			<!-- post action is in a jquery script-->
+			<form id="form" method="post">
+				<!-- certain JQM style that makes html components align a certain way-->
+				<div data-role="fieldcontain">
+					<label for="bn"><font size="5 em"> Board #:</font></label>
+					<input type="text" id="bn" name="bn" value="" />
+				</div>	
+Enter number of each species and their lengths in inches.
+				<br /><strong>Brown: </strong> <input type="text" name="brown">  
+				<br />
+				<br />Lengths: <input type="text" placeholder="1;2;3;" name="blength1">
+				<br />
+				<br /><strong>Garter: </strong> <input type="text"  name="garter">
+				<br />
+				<br />Lengths: <input type="text" placeholder="1;2;3;" name="glength1">
+				<br />
+				<br /><strong>Milk:  </strong><input type="text" name="milk">
+				<br />
+				<br />Lengths: <input type="text"  placeholder="1;2;3;" name="mlength1"><br />
+				<br /><strong>Other: </strong> <input type="text"  placeholder="Number and species..." name="other">
+				<br />
+				<br />Lengths: <input type="text" placeholder="1;2;3;" name="olength1">
+				<br />
+				<br />Additional Notes: <textarea rows="3" name="notes"></textarea> 		<br />
+				<br />
+				<input type="submit" id="submitform" value="Submit" />
+			</form>
+
+			<!-- home button-->
+			<a href="#main" data-role="button" data-icon="back" data-iconpos="notext"></a>
 		</div>
 	</div>
-		
-		
+
+
+
+	<div data-role="dialog" id="promptpopup" data-theme="a">
+		<div data-role="content" data-theme="a" >
+			<a href="#main" data-role="button" data-icon="back" data-iconpos="notext"></a>
+			<input type="button" id="edit_btn" value="Edit" />
+			<input type="button" id="delete_btn" value="Delete" />
+			<!--form id="promptform" method="post">
+				<div data-role="fieldcontain">
+					<input type="button" id="edit_btn" value="Edit" />
+					<input type="button" id="delete_btn" value="Delete" />
+				</div>	
+				<input type="submit" id="submitform" value="Submit" /-->
+			<!--/form-->
+		</div>
+	</div>
+
+
+
 	<!--
-		<div data-role="none" class="btn-toolbar" align="center">
-			
-				<div class="btn-group" align="center">
-					
-						<a id="boe" class="btn btn-info">Board of Ed Field</a>
-						<a id="oil" class="btn btn-inverse">Oil Pump Field</a>
-						<a id="htw" class="btn btn-warning">High Tension Wires</a>
-						
-				</div>
-				
-						<a id="rem" class="btn btn-danger"> Remove Last Marker </a>
-					
-			</div>-->
-		
-				
-	<script type="text/javascript">
-		
-		$(document).ready(function(){
-		
-			
-			var height = $(window).height()
-			
-			
-				//alert(height);
-			
-				height = height - 115;
-				
-				
-			$('#map').css("height", height);
-		//	alert(height);
-		
-		});
-	
-	
-	</script>
-		
-			
+	<div data-role="none" class="btn-toolbar" align="center">
+		<div class="btn-group" align="center">
+			<a id="boe" class="btn btn-info">Board of Ed Field</a>
+			<a id="oil" class="btn btn-inverse">Oil Pump Field</a>
+			<a id="htw" class="btn btn-warning">High Tension Wires</a>
+		</div>
+			<a id="rem" class="btn btn-danger"> Remove Last Marker </a>
+	</div>
+	-->
+
+
+<script type="text/javascript">
+$(document).ready(function(){
+	var spacing = 115;
+	var height = $(window).height() - spacing;
+
+	$('#map').css("height", height);
+});
+</script>
+
 
 <script>
-	
-	 
 function init(){
-		//declare marker array elements or whatever
-		var i = 0;
-		var array = [];
-		
-		
-		
-		//default centers of the map (referenced by button clicks)
-		var wires = new google.maps.LatLng(41.386337 ,-81.629349);
-		var board = new google.maps.LatLng(41.388204, -81.635655);
-		var pump = new google.maps.LatLng(41.387117, -81.63261);
-		
-						
-						//options to limit user so they dont fuck with this app
-						var mapOptions = {
-							 panControl:false,
-							zoomControl:true,
-							mapTypeControl:false,
-							scaleControl:false,
-							streetViewControl:false,
-							overviewMapControl:false,
-							rotateControl:false, 
-						
-						  center: board,
-						  zoom: 19,
-						  mapTypeId: google.maps.MapTypeId.HYBRID
-						  };
-						  
-	// click buttons and map pans to different sides of land lab
-	
+	//declare marker array elements or whatever
+	var i = 0;
+	var markers = [];
 
+	//default centers of the map (referenced by button clicks)
+	var wires = new google.maps.LatLng(41.386337 ,-81.629349);
+	var board = new google.maps.LatLng(41.388204, -81.635655);
+	var pump = new google.maps.LatLng(41.387117, -81.63261);
+
+	//options to limit user so they dont fuck with this app
+	var mapOptions = {
+		panControl:false,
+		zoomControl:true,
+		mapTypeControl:false,
+		scaleControl:false,
+		streetViewControl:false,
+		overviewMapControl:false,
+		rotateControl:false, 
+
+		center: board,
+		zoom: 19,
+		mapTypeId: google.maps.MapTypeId.HYBRID
+	};
+
+	// click buttons and map pans to different sides of land lab
 	google.maps.event.addDomListener(htw, 'click', function() {
-		
 		map.panTo(wires);
 	});
-  
+
 	google.maps.event.addDomListener(boe, 'click', function() {
-		
 		map.panTo(board);
 	});
-	
+
 	google.maps.event.addDomListener(oil, 'click', function() {
-		
 		map.panTo(pump);
 	});
-	
-	
-	
-	
-	
-	//removes a marker after it has been made, on button click only
-    var map = new google.maps.Map(document.getElementById("map"),
-            mapOptions);
-			
-			google.maps.event.addDomListener(rem, 'click', function() {		
-							
-				array[array.length-1].setMap(null);
-				array.pop();
-				//alert(array.length);
+
+	// Generate the map on the page in div "#map"
+	var map = new google.maps.Map(document.getElementById("map"), mapOptions);
+
+	//removes a marker, after it has been made, on button "#rem" click only
+	google.maps.event.addDomListener(rem, 'click', function(){
+		markers[markers.length-1].setMap(null);
+		markers.pop();
+		//console.log("markers array length: " + markers.length);
+	});
+
+	// on clicking the map, a new marker is made
+	google.maps.event.addListener(map, 'click', function(event) {
+		var location = new google.maps.LatLng(event.latLng.lat(), event.latLng.lng());
+		var mark = new google.maps.Marker({
+				position: location,
+				map: map
 			});
-						
-					//on clicking the map, a new marker is made
-					google.maps.event.addListener(map, 'click', function(event) {
-					
-						var location = new google.maps.LatLng(event.latLng.lat(),event.latLng.lng());
-						var marker = new google.maps.Marker({
-						
-							position: location,
-							map: map
-							
-					
-					});
-							
-							//couns marker in the array (for removal purposes);
-							array.push(marker);
-							//alert(array.length);
-			
-								
-						//click the marker you just made and it brings up Jquery mobile dialog forms
-						google.maps.event.addDomListener(marker, 'click', function() {
-										document.getElementById("form").reset();
-										window.location.href = "#formpopup";
-						});
-							
+		markers.push(mark);
+
+		var loc = location;
+		$.ajax({type: "POST",
+			url: "/cgi-bin/addMarker.py",
+			data: {"latitude": loc.lat(), "longitude": loc.lng()}
+		}).done(function(msg){
+			console.log(msg);
+			//if (msg == 0) console.log("Script call with POST successful");
+			//else console.log("Error: " + msg);
 		});
-		
+
+		//clickng a marker brings up jQuery Mobile dialog form
+		markerClickListener(mark, markers);
+	});
+
+	// Load exsisting markers
+	$.getJSON("markers.json", function(data){
+		//data.forEach(function(d) //forEach is not supported in IE8.
+		$.each(data, function(index, d){
+			var loc = new google.maps.LatLng(d['latitude'], d['longitude']);
+			var mark = new google.maps.Marker({
+					position: loc,
+					map: map
+				});
+			markers.push(mark);
+
+			//clickng a marker brings up jQuery Mobile dialog form
+			markerClickListener(mark, markers);
+		});
+	});
+	
+	$('#clearAll').click(function(){clearAllMarkers(markers);});
 }
-		
 
-				
+function markerClickListener(mark, markers){
+	google.maps.event.addDomListener(mark, 'click', function(){
+		var loc = mark.position;
+		//prompt to edit or delete
+		window.location.href = "#promptpopup";
+		$('#edit_btn').click(function(){
+			document.getElementById("form").reset();
+			//formLoad(loc);
+			window.location.href = "#formpopup";
+		});
+		$('#delete_btn').click(function(){
+			//markers[markers.indexOf(mark)].setMap(null);
+			mark.setMap(null);
+			markers.pop(mark);
+			$.ajax({type: "POST",
+				url: "/cgi-bin/removeMarker.py",
+				data: {"latitude": loc.lat(), "longitude": loc.lng()}
+			}).done(function(msg){
+				console.log(msg);
+			});
+			window.location.href = "#main";
+		});
+	});
+}
 
-		//reference scrap code 
-			
-	/*
+function clearAllMarkers(markers){
+	$.each(markers, function(index, m){
+		m.setMap(null);
+	});
+	markers = new Array();
+	$.post("/cgi-bin/clearAllMarkers.py")
+		.done(function(msg){
+			console.log(msg);
+		});
+}
+
+//-----------------------------------------------------------------------
+// reference scrap code
+/*
 	google.maps.event.addListener(map, 'click', function(event){
-  alert( "Latitude: "+event.latLng.lat()+" "+", longitude: "+event.latLng.lng() ); 
-});
-	
-	*/
-	
-	
-	
-	/*	
+		console.log("Latitude: " + event.latLng.lat() + 
+					" " + ", longitude: " + event.latLng.lng()); 
+	});
+*/
+
+
+/*
 	var marker1 = new google.maps.Marker({
 		position: MSB,
         map: map,
         title: "1",
-			});
-		
-
-			
+	});
 
 	var infowindowRec = new google.maps.InfoWindow({
-		
-		});
+
+	});
+
 	infowindowRec.setContent('');
-		
-	
-	
+
 	google.maps.event.addDomListener(marker1, 'click', function() {
-		
 		infowindowMSB.open(map,marker1);
 		infowindowTrack.close(map,marker2);	
 		infowindowChipotle.close(map,marker3);		
 		infowindowRec.close(map,marker4);	
-  });
- 
+	});
 */
-  
-
-  
-	
-	
-	
-	
-	
-
 </script>
 
 
-
 <script> 
-       
-    $(document).ready(function() {
-	
-
-				//clicks the button, e.preventDefault(); stops the browser from going to ../data.php, 
-				//then posts form data to php file
-		 $('#submitform').click(function(e) {
-			
-            e.preventDefault(); // <-- important
-			$.post(
+$(document).ready(function() {
+	// clicking the button posts form data to php file
+	$('#submitform').click(function(e) {
+	// e.preventDefault(); prevents browser URL navigation 
+		e.preventDefault(); // <-- important
+		$.post(
 			"data.php",
-			$("#form").serialize()
-			);
-			//after the post method is implemented, i cannot seem to do much else......
-				//I.E: 
-					//i wanted to change 'submit' to 'submitted' and add another button after the
-					//processing completed but i couldnt. Not sure what the problem is, but it works as it is.
-        });
-});
+			$('#form').serialize()
+		);
+// after the post method is implemented, i cannot seem to do much else......
+// i.e.: i wanted to change 'submit' to 'submitted' and add another button 
+// after the processing completed but i couldnt. Not sure what the problem is, 
+// but it works as it is.
+		$('#submitform').attr('value', "Submitted"); // <-- works but 
+		// jQuery Mobile hides the actual input tag with the class 
+		// "ui-btn-hidden" and displays a span of class "ui-btn-text"
 
+		//$('#formpopup').trigger('refresh');
+		//$('#formpopup').trigger('updatelayout');
+		//$('#submitform').trigger('create');
+		//$('#submitform').trigger('updatelayout');
+		//$('#submitform').trigger('create');
+		// I can not figure out the relayout, but this works...
+		$('#submitform').parent()
+			.children('span')
+			.children('span')
+			.html("Submitted");
+	});
+});
 </script> 
 
-
-
-
-
 </body>
-
-
-
 </html>
+
