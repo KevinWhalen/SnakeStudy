@@ -158,16 +158,16 @@ $(document).ready(function(){
 
 <script>
 function init(){
-	//declare marker array elements or whatever
+	// array of marker elements
 	var i = 0;
 	var markers = [];
 
-	//default centers of the map (referenced by button clicks)
+	// default centers of the map (referenced by button clicks)
 	var wires = new google.maps.LatLng(41.386337 ,-81.629349);
 	var board = new google.maps.LatLng(41.388204, -81.635655);
 	var pump = new google.maps.LatLng(41.387117, -81.63261);
 
-	//options to limit user so they dont fuck with this app
+	// options to limit user
 	var mapOptions = {
 		panControl:false,
 		zoomControl:true,
@@ -182,7 +182,7 @@ function init(){
 		mapTypeId: google.maps.MapTypeId.HYBRID
 	};
 
-	// click buttons and map pans to different sides of land lab
+	// click buttons based on id and map centers (pans) to associated location.
 	google.maps.event.addDomListener(htw, 'click', function() {
 		map.panTo(wires);
 	});
@@ -239,7 +239,7 @@ function init(){
 				});
 			markers.push(mark);
 
-			//clickng a marker brings up jQuery Mobile dialog form
+			// clickng a marker brings up jQuery Mobile dialog form
 			markerClickListener(mark, markers);
 		});
 	});
@@ -247,6 +247,8 @@ function init(){
 	$('#clearAll').click(function(){clearAllMarkers(markers);});
 }
 
+
+// Sets an event to marks on the map (call when marks are created)
 function markerClickListener(mark, markers){
 	google.maps.event.addDomListener(mark, 'click', function(){
 		var loc = mark.position;
